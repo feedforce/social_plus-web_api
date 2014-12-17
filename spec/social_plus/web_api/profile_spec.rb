@@ -1,6 +1,5 @@
 # -*- encoding: UTF-8 -*-
 
-require 'spec_helper'
 require 'social_plus/web_api/profile'
 
 describe SocialPlus::WebApi::Profile do

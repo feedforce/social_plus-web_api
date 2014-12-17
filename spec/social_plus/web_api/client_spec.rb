@@ -1,6 +1,5 @@
 # -*- encoding: UTF-8 -*-
 
-require 'spec_helper'
 require 'social_plus/web_api/client'
 
 describe SocialPlus::WebApi::Client do
