@@ -2,6 +2,7 @@
 
 require 'social_plus/web_api/profile'
 require 'active_support/core_ext/string/inquiry'
+require 'active_support/core_ext/hash/slice'
 
 module SocialPlus
   module WebApi

@@ -1,5 +1,11 @@
 # -*- encoding: UTF-8 -*-
 
+require 'active_support/core_ext/hash/indifferent_access'
+require 'active_support/core_ext/object/blank'
+require 'active_support/core_ext/object/inclusion'
+require 'active_support/core_ext/object/try'
+require 'active_support/core_ext/string/conversions'
+
 module SocialPlus
   module WebApi
 

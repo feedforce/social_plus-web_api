@@ -3,6 +3,9 @@
 require 'uri'
 require 'net/https'
 
+require 'active_support/core_ext/object/to_query'
+require 'active_support/core_ext/hash/except'
+
 require 'social_plus/web_api/api_error'
 
 module SocialPlus

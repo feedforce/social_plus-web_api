@@ -1,5 +1,6 @@
 # -*- encoding: UTF-8 -*-
 
+require 'json'
 require 'social_plus/web_api/client'
 
 describe SocialPlus::WebApi::Client do
