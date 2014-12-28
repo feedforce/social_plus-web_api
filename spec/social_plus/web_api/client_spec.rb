@@ -48,7 +48,7 @@ describe SocialPlus::WebApi::Client do
       }
       it 'API例外を発生させる' do
         expect { subject }.to raise_error {|error|
-          error.should be_an_instance_of(SocialPlus::ApiError)
+          error.should be_an_instance_of(SocialPlus::WebApi::ApiError)
           expect(error.message).to eq('Invalid API key or API key not found.')
           expect(error.code).to eq(1)
         }
@@ -60,7 +60,7 @@ describe SocialPlus::WebApi::Client do
       let(:stub_body) { '' }
       it 'HTTP応答に基づいたAPI例外を発生させる' do
         expect { subject }.to raise_error {|error|
-          expect(error).to be_an_instance_of(SocialPlus::ApiError)
+          expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
           expect(error.code).to eq(503)
         }
       end
@@ -71,7 +71,7 @@ describe SocialPlus::WebApi::Client do
       let(:stub_body) { '' }
       it 'HTTP応答に基づいたAPI例外を発生させる' do
         expect { subject }.to raise_error {|error|
-          expect(error).to be_an_instance_of(SocialPlus::ApiError)
+          expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
           expect(error.code).to eq(402)
         }
       end
@@ -82,7 +82,7 @@ describe SocialPlus::WebApi::Client do
       let(:stub_body) { '' }
       it 'HTTP応答に基づいたAPI例外を発生させる' do
         expect { subject }.to raise_error {|error|
-          expect(error).to be_an_instance_of(SocialPlus::ApiError)
+          expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
           expect(error.code).to eq(301)
         }
       end

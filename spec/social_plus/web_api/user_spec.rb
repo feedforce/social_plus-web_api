@@ -17,7 +17,7 @@ describe SocialPlus::WebApi::User do
     before :each do
       api_client.stub(:execute).with('authenticated_user', token: token, add_profile: true).and_return(authenticated_user_api_result)
       api_client.stub(:execute).with('providers_of_user', identifier: authenticated_user_api_result['user']['identifier']).and_return(providers_of_user_api_result)
-      SocialPlus::User.stub(:new).with(social_plus_user_params).and_return(user)
+      SocialPlus::WebApi::User.stub(:new).with(social_plus_user_params).and_return(user)
     end
 
     it { should eq(user) }
@@ -43,7 +43,7 @@ describe SocialPlus::WebApi::User do
       its('last_logged_in_provider.twitter?') { should == true }
     end
 
-    its(:profile) { should be_an_instance_of(SocialPlus::Profile) }
+    its(:profile) { should be_an_instance_of(SocialPlus::WebApi::Profile) }
     its(:followers) { should eq(200) }
 
     context %q|when 'user' is missing| do

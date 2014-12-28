@@ -40,7 +40,7 @@ module SocialPlus
         @identifier = user['identifier']
         last_logged_in_provider = user['last_logged_in_provider'] || ''
         @last_logged_in_provider = last_logged_in_provider.inquiry.freeze
-        @profile = SocialPlus::Profile.new(params.slice('profile', 'email')).freeze
+        @profile = SocialPlus::WebApi::Profile.new(params.slice('profile', 'email')).freeze
         @followers = params.key?('follow') && params['follow'].key?('followed_by') ? params['follow']['followed_by'] : 0
         @providers = params['providers']
       end
