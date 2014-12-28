@@ -203,8 +203,8 @@ module SocialPlus
         city_code = profile[:location_jis_id].to_i
         if city_code > 0
           prefecture_code = city_code / 1000
-          if ::Entry::PREFECTURES.key?(prefecture_code)
-            prefecture_name = ::Entry::PREFECTURES[prefecture_code]
+          if PREFECTURES.key?(prefecture_code)
+            prefecture_name = PREFECTURES[prefecture_code]
             location = (profile[:location] || '').sub(/\A#{prefecture_name}/, '')
             [ prefecture_code, prefecture_name, city_code, location ]
           else
@@ -216,6 +216,10 @@ module SocialPlus
           [ nil, '', nil, '' ]
         end
       end
+
+      PREFECTURES = {
+        13 => '東京都'
+      }
     end
 
   end
