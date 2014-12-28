@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = SocialPlus::WebApi::VERSION
   spec.authors       = %(OZAWA Sakuro)
   spec.email         = %(sakuro@users.noreply.github.com)
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{SocialPlus Web API client}
+  spec.description   = %q{SocialPlus Web API client}
   spec.homepage      = ''
   spec.license       = 'Confidential'
 
