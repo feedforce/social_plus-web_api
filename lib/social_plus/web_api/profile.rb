@@ -33,11 +33,11 @@ module SocialPlus
           @zip_code = profile[:postal_code]
           @prefecture, @prefecture_name, @city, @location = extract_location(profile).freeze
 
-          @gender = profile[:gender] if profile[:gender].in?(1, 2)
+          @gender = profile[:gender] if profile[:gender].in?([1, 2])
 
           if Enumerable === profile[:uri]
             @urls = profile[:uri].map {|uri_string| URI(uri_string).freeze rescue nil}.
-              select {|url| url.try(:scheme).in?('http', 'https')}.freeze
+              select {|url| url.try(:scheme).in?(['http', 'https'])}.freeze
           end
 
           if /\A\d{4}-\d{2}-\d{2}\z/ =~ profile[:birthday]
