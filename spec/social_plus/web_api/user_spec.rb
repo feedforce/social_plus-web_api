@@ -24,27 +24,29 @@ describe SocialPlus::WebApi::User do
   end
 
   describe '#initialize' do
-    subject { described_class.send(:new, social_plus_user_params) }
-    its(:identifier) { should eq('12345abcde12345abcde12345abcde12345abcde') }
-    its(:last_logged_in_provider) { should eq('feedforce') }
-    its('last_logged_in_provider.facebook?') { should == false }
-    its('last_logged_in_provider.twitter?') { should == false }
+    let(:social_plus_user) { described_class.send(:new, social_plus_user_params) }
+    subject { social_plus_user }
+
+    it { expect(social_plus_user.identifier).to eq('12345abcde12345abcde12345abcde12345abcde') }
+    it { expect(social_plus_user.last_logged_in_provider).to eq('feedforce') }
+    it { expect(social_plus_user.last_logged_in_provider.facebook?).to eq(false) }
+    it { expect(social_plus_user.last_logged_in_provider.twitter?).to eq(false) }
 
     context 'logged in via facebook' do
-      subject { described_class.send(:new, social_plus_user_params.deep_merge('user' => {'last_logged_in_provider' => 'facebook'})) }
-      its(:last_logged_in_provider) { should eq('facebook') }
-      its('last_logged_in_provider.facebook?') { should == true }
-      its('last_logged_in_provider.twitter?') { should == false }
+      let(:social_plus_user) { described_class.send(:new, social_plus_user_params.deep_merge('user' => {'last_logged_in_provider' => 'facebook'})) }
+      it { expect(social_plus_user.last_logged_in_provider).to eq('facebook') }
+      it { expect(social_plus_user.last_logged_in_provider.facebook?).to eq(true) }
+      it { expect(social_plus_user.last_logged_in_provider.twitter?).to eq(false) }
     end
     context 'logged in via twitter' do
-      subject { described_class.send(:new, social_plus_user_params.deep_merge('user' => {'last_logged_in_provider' => 'twitter'})) }
-      its(:last_logged_in_provider) { should eq('twitter') }
-      its('last_logged_in_provider.facebook?') { should == false }
-      its('last_logged_in_provider.twitter?') { should == true }
+      let(:social_plus_user) { described_class.send(:new, social_plus_user_params.deep_merge('user' => {'last_logged_in_provider' => 'twitter'})) }
+      it { expect(social_plus_user.last_logged_in_provider).to eq('twitter') }
+      it { expect(social_plus_user.last_logged_in_provider.facebook?).to eq(false) }
+      it { expect(social_plus_user.last_logged_in_provider.twitter?).to eq(true) }
     end
 
-    its(:profile) { should be_an_instance_of(SocialPlus::WebApi::Profile) }
-    its(:followers) { should eq(200) }
+    it { expect(social_plus_user.profile).to be_an_instance_of(SocialPlus::WebApi::Profile) }
+    it { expect(social_plus_user.followers).to eq(200) }
 
     context %q|when 'user' is missing| do
       before do
@@ -68,13 +70,13 @@ describe SocialPlus::WebApi::User do
       before do
         social_plus_user_params.except!('follow')
       end
-      its(:followers) { should eq(0) }
+      it { expect(social_plus_user.followers).to eq(0) }
     end
     context %q|wen 'follow/followed_by' is missing| do
       before do
         social_plus_user_params['follow'].except!('followed_by')
       end
-      its(:followers) { should eq(0) }
+      it { expect(social_plus_user.followers).to eq(0) }
     end
   end
 end
