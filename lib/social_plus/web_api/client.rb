@@ -68,10 +68,6 @@ module SocialPlus
       def request(http_method, api_method, parameters)
         uri = request_uri(api_method)
         request = send("create_#{http_method.downcase}_request", uri, parameters)
-        Rails.logger.tagged('web api') do |logger|
-          logger.debug("URI: #{http_method.upcase} #{uri.path}")
-          logger.debug("Parameters: #{parameters.inspect}")
-        end
         Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
           http.request(request)
         end
