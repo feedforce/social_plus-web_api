@@ -20,7 +20,7 @@ describe SocialPlus::WebApi::User do
       allow(SocialPlus::WebApi::User).to receive(:new).with(social_plus_user_params).and_return(user)
     end
 
-    it { should eq(user) }
+    it { is_expected.to eq(user) }
   end
 
   describe '#initialize' do

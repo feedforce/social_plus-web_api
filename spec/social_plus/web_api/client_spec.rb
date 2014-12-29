@@ -9,7 +9,7 @@ describe SocialPlus::WebApi::Client do
       # 40-digit hexadecimal
       let(:valid_api_key) { '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3' }
       subject { SocialPlus::WebApi::Client.new(valid_api_key) }
-      it { should be_an_instance_of(SocialPlus::WebApi::Client) }
+      it { is_expected.to be_an_instance_of(SocialPlus::WebApi::Client) }
     end
 
     context '書式が妥当でないAPIキー' do
@@ -32,7 +32,7 @@ describe SocialPlus::WebApi::Client do
           }
         }.to_json
       }
-      it { should eq({'info' => {'account' => 'ff', 'site_id' => 'demoapp'}}) }
+      it { is_expected.to eq({'info' => {'account' => 'ff', 'site_id' => 'demoapp'}}) }
     end
 
     context '未登録のAPIキー' do
@@ -48,7 +48,7 @@ describe SocialPlus::WebApi::Client do
       }
       it 'API例外を発生させる' do
         expect { subject }.to raise_error {|error|
-          error.should be_an_instance_of(SocialPlus::WebApi::ApiError)
+          expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
           expect(error.message).to eq('Invalid API key or API key not found.')
           expect(error.code).to eq(1)
         }
@@ -98,7 +98,7 @@ describe SocialPlus::WebApi::Client do
       let(:request) { client.send(:create_get_request, URI('https://api.socialplus.jp/api/appinfo'), key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3') }
       describe 'User-Agent' do
         subject { request['User-Agent'] }
-        it { should eq('Social Campaign') }
+        it { is_expected.to eq('Social Campaign') }
       end
     end
 
@@ -120,7 +120,7 @@ describe SocialPlus::WebApi::Client do
       let(:request) { client.send(:create_post_request, URI('https://api.socialplus.jp/api/share'), key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3') }
       describe 'User-Agent' do
         subject { request['User-Agent'] }
-        it { should eq('Social Campaign') }
+        it { is_expected.to eq('Social Campaign') }
       end
     end
 
