@@ -110,7 +110,7 @@ describe SocialPlus::WebApi::Client do
         )
       end
 
-      it_should_behave_like 'Web API'
+      it_behaves_like 'Web API'
     end
   end
 
@@ -132,7 +132,7 @@ describe SocialPlus::WebApi::Client do
         )
       end
 
-      it_should_behave_like 'Web API'
+      it_behaves_like 'Web API'
     end
   end
 end
