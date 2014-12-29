@@ -15,9 +15,9 @@ describe SocialPlus::WebApi::User do
     subject { SocialPlus::WebApi::User.authenticate(api_client, token) }
 
     before :each do
-      api_client.stub(:execute).with('authenticated_user', token: token, add_profile: true).and_return(authenticated_user_api_result)
-      api_client.stub(:execute).with('providers_of_user', identifier: authenticated_user_api_result['user']['identifier']).and_return(providers_of_user_api_result)
-      SocialPlus::WebApi::User.stub(:new).with(social_plus_user_params).and_return(user)
+      allow(api_client).to receive(:execute).with('authenticated_user', token: token, add_profile: true).and_return(authenticated_user_api_result)
+      allow(api_client).to receive(:execute).with('providers_of_user', identifier: authenticated_user_api_result['user']['identifier']).and_return(providers_of_user_api_result)
+      allow(SocialPlus::WebApi::User).to receive(:new).with(social_plus_user_params).and_return(user)
     end
 
     it { should eq(user) }
