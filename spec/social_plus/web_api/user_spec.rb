@@ -12,7 +12,7 @@ describe SocialPlus::WebApi::User do
 
   describe '.authenticate' do
     let(:user) { double(:user) }
-    subject { described_class.authenticate(api_client, token) }
+    subject { SocialPlus::WebApi::User.authenticate(api_client, token) }
 
     before :each do
       api_client.stub(:execute).with('authenticated_user', token: token, add_profile: true).and_return(authenticated_user_api_result)
@@ -24,7 +24,7 @@ describe SocialPlus::WebApi::User do
   end
 
   describe '#initialize' do
-    let(:social_plus_user) { described_class.send(:new, social_plus_user_params) }
+    let(:social_plus_user) { SocialPlus::WebApi::User.send(:new, social_plus_user_params) }
     subject { social_plus_user }
 
     it { expect(social_plus_user.identifier).to eq('12345abcde12345abcde12345abcde12345abcde') }
@@ -33,13 +33,13 @@ describe SocialPlus::WebApi::User do
     it { expect(social_plus_user.last_logged_in_provider.twitter?).to eq(false) }
 
     context 'logged in via facebook' do
-      let(:social_plus_user) { described_class.send(:new, social_plus_user_params.deep_merge('user' => {'last_logged_in_provider' => 'facebook'})) }
+      let(:social_plus_user) { SocialPlus::WebApi::User.send(:new, social_plus_user_params.deep_merge('user' => {'last_logged_in_provider' => 'facebook'})) }
       it { expect(social_plus_user.last_logged_in_provider).to eq('facebook') }
       it { expect(social_plus_user.last_logged_in_provider.facebook?).to eq(true) }
       it { expect(social_plus_user.last_logged_in_provider.twitter?).to eq(false) }
     end
     context 'logged in via twitter' do
-      let(:social_plus_user) { described_class.send(:new, social_plus_user_params.deep_merge('user' => {'last_logged_in_provider' => 'twitter'})) }
+      let(:social_plus_user) { SocialPlus::WebApi::User.send(:new, social_plus_user_params.deep_merge('user' => {'last_logged_in_provider' => 'twitter'})) }
       it { expect(social_plus_user.last_logged_in_provider).to eq('twitter') }
       it { expect(social_plus_user.last_logged_in_provider.facebook?).to eq(false) }
       it { expect(social_plus_user.last_logged_in_provider.twitter?).to eq(true) }

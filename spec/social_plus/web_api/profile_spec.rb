@@ -8,7 +8,7 @@ describe SocialPlus::WebApi::Profile do
   let(:params) { social_plus_user_params }
 
   describe '#initialize' do
-    let(:profile) { described_class.new(params) }
+    let(:profile) { SocialPlus::WebApi::Profile.new(params) }
     subject { profile }
 
     describe 'name stuff' do

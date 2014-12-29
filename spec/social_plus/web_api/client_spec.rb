@@ -8,8 +8,8 @@ describe SocialPlus::WebApi::Client do
     context '書式が妥当なAPIキー' do
       # 40-digit hexadecimal
       let(:valid_api_key) { '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3' }
-      subject { described_class.new(valid_api_key) }
-      it { should be_an_instance_of(described_class) }
+      subject { SocialPlus::WebApi::Client.new(valid_api_key) }
+      it { should be_an_instance_of(SocialPlus::WebApi::Client) }
     end
 
     context '書式が妥当でないAPIキー' do
@@ -90,7 +90,7 @@ describe SocialPlus::WebApi::Client do
   end
 
   let(:api_key) { '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3' }
-  let(:client) { described_class.new(api_key) }
+  let(:client) { SocialPlus::WebApi::Client.new(api_key) }
 
   describe 'GET リクエスト' do
 
