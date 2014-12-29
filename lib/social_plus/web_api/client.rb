@@ -90,7 +90,7 @@ module SocialPlus
       def parse_as_json(json_text)
         json_text ||= '{}'
         JSON.parse(json_text)
-      rescue JSON::ParserError => e
+      rescue JSON::ParserError
         {}
       end
 
