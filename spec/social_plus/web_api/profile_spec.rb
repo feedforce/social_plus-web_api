@@ -9,7 +9,6 @@ describe SocialPlus::WebApi::Profile do
 
   describe '#initialize' do
     let(:profile) { SocialPlus::WebApi::Profile.new(params) }
-    subject { profile }
 
     describe 'name stuff' do
       #     full(K) | last(K) | first(K) | full | last | first | user |
