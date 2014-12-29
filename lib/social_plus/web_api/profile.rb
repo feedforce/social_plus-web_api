@@ -26,7 +26,7 @@ module SocialPlus
 
         params = params.with_indifferent_access
 
-       if params.key?(:profile)
+        if params.key?(:profile)
           profile = params[:profile]
           @full_name, @given_name, @family_name, @full_name_kana, @given_name_kana, @family_name_kana = extract_names(profile).freeze
 
