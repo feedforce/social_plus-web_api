@@ -5,7 +5,6 @@ require 'social_plus/web_api/client'
 
 describe SocialPlus::WebApi::Client do
   describe '#initialize' do
-
     context '書式が妥当なAPIキー' do
       # 40-digit hexadecimal
       let(:valid_api_key) { '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3' }
@@ -93,7 +92,6 @@ describe SocialPlus::WebApi::Client do
   let(:client) { SocialPlus::WebApi::Client.new(api_key) }
 
   describe 'GET リクエスト' do
-
     describe 'リクエストヘッダー' do
       let(:request) { client.send(:create_get_request, URI('https://api.socialplus.jp/api/appinfo'), key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3') }
       describe 'User-Agent' do
@@ -114,7 +112,6 @@ describe SocialPlus::WebApi::Client do
   end
 
   describe 'POST リクエスト' do
-
     describe 'リクエストヘッダー' do
       let(:request) { client.send(:create_post_request, URI('https://api.socialplus.jp/api/share'), key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3') }
       describe 'User-Agent' do
