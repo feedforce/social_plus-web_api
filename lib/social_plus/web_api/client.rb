@@ -78,7 +78,7 @@ module SocialPlus
       end
 
       def create_post_request(uri, parameters)
-        Net::HTTP::Post.new(uri.path, 'User-Agent' => USER_AGENT).tap {|request| request.body = parameters.to_query }
+        Net::HTTP::Post.new(uri.path, 'User-Agent' => USER_AGENT).tap { |request| request.body = parameters.to_query }
       end
 
       def request_uri(method)
@@ -95,7 +95,7 @@ module SocialPlus
       end
 
       def social_plus_error?(result)
-        result.key?('error') && %w(message code).all? {|key| result['error'].key?(key) }
+        result.key?('error') && %w(message code).all? { |key| result['error'].key?(key) }
       end
     end
 

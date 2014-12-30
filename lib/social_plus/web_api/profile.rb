@@ -36,8 +36,8 @@ module SocialPlus
           @gender = profile[:gender] if profile[:gender].in?([1, 2])
 
           if Enumerable === profile[:uri]
-            @urls = profile[:uri].map {|uri_string| URI(uri_string).freeze rescue nil}.
-              select {|url| url.try(:scheme).in?(%w(http https))}.freeze
+            @urls = profile[:uri].map { |uri_string| URI(uri_string).freeze rescue nil }.
+              select { |url| url.try(:scheme).in?(%w(http https)) }.freeze
           end
 
           if /\A\d{4}-\d{2}-\d{2}\z/ =~ profile[:birthday]
@@ -46,7 +46,7 @@ module SocialPlus
         end
 
         if Enumerable === params[:email]
-          @emails = params[:email].map {|email| email[:email].freeze}.reject(&:nil?).freeze
+          @emails = params[:email].map { |email| email[:email].freeze }.reject(&:nil?).freeze
         end
         freeze
       end
