@@ -15,41 +15,37 @@ module SocialPlus
       # @option params [Hash] "profile" ユーザープロフィール
       # @option params [Array] "email" メールアドレス情報
       def initialize(params)
-        @full_name, @given_name, @family_name = '', '', ''
-        @full_name_kana, @given_name_kana, @family_name_kana = '', '', ''
-        @urls = []
-        @zip_code = nil
-        @gender = nil
-        @birthday = nil
-        @emails = []
-
         params = params.with_indifferent_access
+        assign_profile(params[:profile]) if params.key?(:profile)
 
-        if params.key?(:profile)
-          profile = params[:profile]
-          @full_name, @given_name, @family_name, @full_name_kana, @given_name_kana, @family_name_kana = extract_names(profile).freeze
-
-          @zip_code = profile[:postal_code]
-          @prefecture, @prefecture_name, @city, @location = extract_location(profile).freeze
-
-          @gender = profile[:gender] if profile[:gender].in?([1, 2])
-
-          if profile[:uri].respond_to?(:map)
-            @urls = profile[:uri]
-                      .map { |uri_string| URI(uri_string).freeze rescue nil }
-                      .select { |url| url.try(:scheme).in?(%w(http https)) }
-                      .freeze
-          end
-
-          if /\A\d{4}-\d{2}-\d{2}\z/ =~ profile[:birthday]
-            @birthday = profile[:birthday].try(:to_date).freeze
-          end
-        end
-
-        if params[:email].respond_to?(:map)
-          @emails = params[:email].map { |email| email[:email].freeze }.reject(&:nil?).freeze
-        end
+        @emails = []
+        assign_emails(params[:email]) if params.key?(:email) && params[:email].respond_to?(:map)
         freeze
+      end
+
+      def assign_profile(profile)
+        assign_names(profile)
+        @zip_code = profile[:postal_code]
+        assign_location(profile)
+        @gender = profile[:gender] if profile[:gender].in?([1, 2])
+        @urls = profile[:uri].respond_to?(:map) ? filter_http_urls(profile[:uri]) : []
+        @birthday = /\A\d{4}-\d{2}-\d{2}\z/ =~ profile[:birthday] ? profile[:birthday].try(:to_date).freeze : nil
+      end
+
+      def filter_http_urls(uris)
+        uris.map { |uri_string| URI(uri_string).freeze rescue nil }.select { |url| url.try(:scheme).in?(%w(http https)) }
+      end
+
+      def assign_location(profile)
+        @prefecture, @prefecture_name, @city, @location = extract_location(profile).freeze
+      end
+
+      def assign_names(profile)
+        @full_name, @given_name, @family_name, @full_name_kana, @given_name_kana, @family_name_kana = extract_names(profile).freeze
+      end
+
+      def assign_emails(emails)
+        @emails = emails.map { |email| email[:email].freeze }.reject(&:nil?).freeze
       end
 
       # @return [String] 姓名を返す
