@@ -31,7 +31,7 @@ describe SocialPlus::WebApi::Client do
           }
         }.to_json
       }
-      it { expect(api_call).to eq({ 'info' => { 'account' => 'ff', 'site_id' => 'demoapp' } }) }
+      it { expect(api_call).to eq('info' => { 'account' => 'ff', 'site_id' => 'demoapp' }) }
     end
 
     context '未登録のAPIキー' do
