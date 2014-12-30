@@ -63,18 +63,18 @@ module SocialPlus
 
       def request(http_method, api_method, parameters)
         uri = request_uri(api_method)
-        request = send("create_#{http_method.downcase}_request", uri, parameters)
+        request = send("create_#{http_method.downcase}_request", uri.path, parameters)
         Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
           http.request(request)
         end
       end
 
-      def create_get_request(uri, parameters)
-        Net::HTTP::Get.new(uri.path + '?' + parameters.to_query, 'User-Agent' => USER_AGENT)
+      def create_get_request(path, parameters)
+        Net::HTTP::Get.new(path + '?' + parameters.to_query, 'User-Agent' => USER_AGENT)
       end
 
-      def create_post_request(uri, parameters)
-        Net::HTTP::Post.new(uri.path, 'User-Agent' => USER_AGENT).tap { |request| request.body = parameters.to_query }
+      def create_post_request(path, parameters)
+        Net::HTTP::Post.new(path, 'User-Agent' => USER_AGENT).tap { |request| request.body = parameters.to_query }
       end
 
       def request_uri(method)
