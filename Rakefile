@@ -11,6 +11,7 @@ YARD::Rake::YardocTask.new do |t|
   t.files   = %w(lib/**/*.rb)
   t.options = []
   t.options << '--debug' << '--verbose' if $trace
+  t.options << '--markup' << 'markdown'
 end
 
 RuboCop::RakeTask.new
