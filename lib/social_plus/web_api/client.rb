@@ -35,16 +35,14 @@ module SocialPlus
         response = request(http_method, method, parameters.merge(key: @api_key))
         result = parse_as_json(response.body)
 
+        handle_api_error(response, result) unless response.is_a?(Net::HTTPOK)
+
+        result.except('status')
+      end
+
+      def handle_api_error(response, result)
         case response
-        when Net::HTTPOK
-          result.except('status')
-        when Net::HTTPServerError
-          if social_plus_error?(result)
-            raise ApiError, result['error']
-          else
-            raise ApiError, response
-          end
-        when Net::HTTPClientError
+        when Net::HTTPServerError, Net::HTTPClientError
           if social_plus_error?(result)
             raise ApiError, result['error']
           else
