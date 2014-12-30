@@ -9,6 +9,7 @@ require 'active_support/core_ext/string/conversions'
 module SocialPlus
   module WebApi
     # Social Plusから取得したユーザー認証情報のprofile, emailを整理して表現するクラス
+    # rubocop: disable Metrics/ClassLength
     class Profile
       # @param [Hash] params ソーシャルPLUSから取得したユーザー認証情報
       #   以下のキーを参照する。
@@ -98,6 +99,7 @@ module SocialPlus
       private
 
       # 姓名(full_name), 名(given_name), 姓(family_name), セイメイ(full_name_kana), メイ(given_name_kana), セイ(family_name_kana) の配列を返す。
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
       def extract_names(profile)
         full_name_kanji = profile[:full_name_kanji] || ''
         last_name_kanji = profile[:last_name_kanji] || ''
@@ -173,6 +175,7 @@ module SocialPlus
 
         names + kana
       end
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
 
       # [ 都道府県コード(prefecture), 都道府県名(prefecture_name), 市区町村コード(city), 都道府県以降の住所(location) ] の配列を返す
       def extract_location(profile)
@@ -246,5 +249,6 @@ module SocialPlus
         47 => '沖縄県'
       }
     end
+    # rubocop: enable Metrics/ClassLength
   end
 end
