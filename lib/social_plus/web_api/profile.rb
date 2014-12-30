@@ -161,28 +161,28 @@ module SocialPlus
         # #4  ------- | ------- | -------- | ---- | ---- | ----- | **** |
         # #5  ------- | ------- | -------- | ---- | ---- | ----- | ---- |
 
-        #1
+        # #1
         if full_name_kanji.present? && (last_name_kanji.present? || first_name_kanji.present?)
           names = [ full_name_kanji, first_name_kanji, last_name_kanji ]
-        #1'
+        # #1'
         elsif full_name.present? && (last_name.present? || first_name.present?)
           names = [ full_name, first_name, last_name ]
-        #2
+        # #2
         elsif last_name_kanji.present? || first_name_kanji.present?
           names = [ [last_name_kanji, first_name_kanji].join(' ').strip, first_name_kanji, last_name_kanji ]
-        #2'
+        # #2'
         elsif last_name.present? || first_name.present?
           names = [ [last_name, first_name].join(' ').strip, first_name, last_name ]
-        #3
+        # #3
         elsif full_name_kanji.present?
           names = [ full_name_kanji, '', full_name_kanji ]
-        #3'
+        # #3'
         elsif full_name.present?
           names = [ full_name, '', full_name ]
-        #4
+        # #4
         elsif user_name.present?
           names = [ user_name, '', '' ]
-        #5
+        # #5
         else
           names = [ '', '', '' ]
         end
