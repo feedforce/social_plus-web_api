@@ -34,7 +34,7 @@ module SocialPlus
 
           @gender = profile[:gender] if profile[:gender].in?([1, 2])
 
-          if Enumerable === profile[:uri]
+          if profile[:uri].respond_to?(:map)
             @urls = profile[:uri]
                       .map { |uri_string| URI(uri_string).freeze rescue nil }
                       .select { |url| url.try(:scheme).in?(%w(http https)) }
@@ -46,7 +46,7 @@ module SocialPlus
           end
         end
 
-        if Enumerable === params[:email]
+        if params[:email].respond_to?(:map)
           @emails = params[:email].map { |email| email[:email].freeze }.reject(&:nil?).freeze
         end
         freeze
