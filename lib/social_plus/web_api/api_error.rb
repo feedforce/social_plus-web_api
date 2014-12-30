@@ -1,17 +1,15 @@
-# -*- encoding: UTF-8 -*-
-
 require 'net/http'
 
 module SocialPlus
   module WebApi
-    # SocialPlus APIのエラーレスポンスボディをラップする例外
+    # An Exception class which wraps errors from SocialPlus Web API
     class ApiError < StandardError
       # @overload initialize(response)
-      #   @param response [Net::HTTPResponse] HTTPレスポンス(OK以外)
+      #   @param response [Net::HTTPResponse] HTTP Response (except 200 OK)
       # @overload initialize(error)
-      #   @param error [Hash] エラーを表すHash
-      #   @option error [String] message エラーメッセージ
-      #   @option error [Integer] code エラーコード
+      #   @param error [Hash] a Hash which represents an API error
+      #   @option error [String] message the error message
+      #   @option error [Integer] code the error code
       def initialize(error)
         case error
         when Net::HTTPResponse
@@ -23,7 +21,7 @@ module SocialPlus
         end
       end
 
-      # @return [Integer] エラーコード(APIエラーコード または HTTPステータスコード)
+      # @return [Integer] the error code (API error code or HTTP status)
       attr_reader :code
     end
   end

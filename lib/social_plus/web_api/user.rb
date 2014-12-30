@@ -1,21 +1,19 @@
-# -*- encoding: UTF-8 -*-
-
 require 'social_plus/web_api/profile'
 require 'active_support/core_ext/string/inquiry'
 require 'active_support/core_ext/hash/slice'
 
 module SocialPlus
   module WebApi
-    # ソーシャルPLUS上のユーザーを表すオブジェクト
+    # A class which represents a user of Social Plus
     class User
       TOKEN_RE = /\A[0-9a-f]{40}\z/
       private_constant :TOKEN_RE
 
       class << self
-        # トークンを用いてユーザー情報を取得する
-        # @param [Client] api_client APIクライアント
-        # @param [String] token ソーシャルログインのコールバックで渡されたトークン
-        # @return [User] ユーザーオブジェクト
+        # Fetch information of a user using a given one time token
+        # @param [Client] api_client an API client
+        # @param [String] token the token returned from Social Plus login
+        # @return [User] User object
         def authenticate(api_client, token)
           raise ArgumentError, 'invalid token' unless TOKEN_RE =~ token
           result = api_client.execute('authenticated_user', token: token, add_profile: true)
@@ -25,12 +23,12 @@ module SocialPlus
         private :new
       end
 
-      # @param {hash] params ソーシャルAPIから取得したユーザー情報
-      # @option params [Hash] "user" ユーザー
-      # @option params [Hash] "profile" ユーザーのプロフィール情報
-      # @option params [Array] "email" ユーザーのメールアドレス情報
-      # @option params [Hash] "follow" ユーザーのフォロー/被フォロー状況
-      # @option params [Hash] "providers" ログインしたことのあるプロバイダ
+      # @param {hash] params User information obtained from Social Plus Web API
+      # @option params [Hash] "user" User
+      # @option params [Hash] "profile" User's profile
+      # @option params [Array] "email" User's email addresses
+      # @option params [Hash] "follow" User's counts of following/followed people
+      # @option params [Hash] "providers" Providers which the user has logged in
       def initialize(params)
         raise ArgumentError, %q|missing 'user'| unless params.key?('user')
         user = params['user']
@@ -44,15 +42,15 @@ module SocialPlus
         @providers = params['providers']
       end
 
-      # @return [String] ソーシャルPLUS IDを返す
+      # @return [String] The user's Social Plus ID
       attr_reader :identifier
-      # @return [String] 最後にログインしたプロバイダ名を返す
+      # @return [String] The provider which the user has logged in most recently
       attr_reader :last_logged_in_provider
-      # @return [Profile] プロフィールオブジェクトを返す
+      # @return [Profile] The user's profile
       attr_reader :profile
-      # @return [Integer] フォロワー数(リーチ数)を返す
+      # @return [Integer] The number of followers(reaches)
       attr_reader :followers
-      # @return [Array] ログインしたことのあるプロバイダ名の配列を返す
+      # @return [Array] Providers which the user has logged in
       attr_reader :providers
     end
   end

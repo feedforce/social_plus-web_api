@@ -8,13 +8,13 @@ require 'active_support/core_ext/string/conversions'
 
 module SocialPlus
   module WebApi
-    # Social Plusから取得したユーザー認証情報のprofile, emailを整理して表現するクラス
     # rubocop: disable Metrics/ClassLength
+
+    # A class which represents authenticated user's information(profile and email) obtained from Social Plus
     class Profile
-      # @param [Hash] params ソーシャルPLUSから取得したユーザー認証情報
-      #   以下のキーを参照する。
-      # @option params [Hash] "profile" ユーザープロフィール
-      # @option params [Array] "email" メールアドレス情報
+      # @param [Hash<String,Object>] params a user's information obtained from Social Plus.
+      # @option params [Hash] "profile" profile of a user
+      # @option params [Array] "email" email addresses of a user
       def initialize(params)
         params = params.with_indifferent_access
 
@@ -30,53 +30,49 @@ module SocialPlus
         @emails = emails && emails.respond_to?(:map) ? emails.map { |email| email[:email] }.compact : []
       end
 
-      def filter_http_urls(uris)
-        uris.map { |uri_string| URI(uri_string).freeze rescue nil }.select { |url| url.try(:scheme).in?(%w(http https)) }
-      end
-
-      # @return [String] 姓名を返す
+      # @return [String] Returns the user's full name
       attr_reader :full_name
 
-      # @return [String] 姓を返す
+      # @return [String] Returns the user's family name
       attr_reader :family_name
 
-      # @return [String] 名を返す
+      # @return [String] Returns the user's given name
       attr_reader :given_name
 
-      # @return [String] 姓名(カナ)を返す
+      # @return [String] Returns the user's full name in kana
       attr_reader :full_name_kana
 
-      # @return [String] 姓(カナ)を返す
+      # @return [String] Returns the user's family name in kana
       attr_reader :family_name_kana
 
-      # @return [String] 名(カナ)を返す
+      # @return [String] Returns the user's given name in kana
       attr_reader :given_name_kana
 
-      # @return [String] 郵便番号を返す
+      # @return [String] Returns the zip code of user's address
       attr_reader :zip_code
 
-      # @return [Integer] 都道府県コードを返す
+      # @return [Integer] Returns the prefecture code of user's address
       attr_reader :prefecture
 
-      # @return [String] 都道府県名を返す
+      # @return [String] Returns the name of prefecture of user's address
       attr_reader :prefecture_name
 
-      # @return [Integer] 市区町村コードを返す
+      # @return [Integer] Returns the city code of user's address
       attr_reader :city
 
-      # @return [String] 住所を返す
+      # @return [String] Returns the rest of user's address
       attr_reader :location
 
-      # @return [Date] 生年月日を返す
+      # @return [Date] Returns the user's birthday
       attr_reader :birthday
 
-      # @return [Array<URI>] URIの配列を返す
+      # @return [Array<URI>] Returns the user's URLs
       attr_reader :urls
 
-      # @return [Integer] 性別を返す
+      # @return [Integer] Returns the user's gender
       attr_reader :gender
 
-      # @return [Array<String>] メールアドレスの配列を返す
+      # @return [Array<String>] Returns the user's E-Mail addresses
       attr_reader :emails
 
       ATTRIBUTE_KEYS = %w(
@@ -87,7 +83,7 @@ module SocialPlus
         gender
       )
 
-      # @return [HashWithIndifferentAccess] Entryモデルの生成用パラメータを返す
+      # @return [HashWithIndifferentAccess] Returns attributes in Hash form
       def to_attributes
         {}.with_indifferent_access.tap do |attributes|
           ATTRIBUTE_KEYS.each { |key| attributes[key] = send(key) }
@@ -98,8 +94,13 @@ module SocialPlus
 
       private
 
-      # 姓名(full_name), 名(given_name), 姓(family_name), セイメイ(full_name_kana), メイ(given_name_kana), セイ(family_name_kana) の配列を返す。
+      def filter_http_urls(uris)
+        uris.map { |uri_string| URI(uri_string).freeze rescue nil }.select { |url| url.try(:scheme).in?(%w(http https)) }
+      end
+
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+
+      # @return [Array] Returns Array of full name, given name, family name, full name in kana, given name in kana and family name in kana
       def extract_names(profile)
         full_name_kanji = profile[:full_name_kanji] || ''
         last_name_kanji = profile[:last_name_kanji] || ''
@@ -177,7 +178,7 @@ module SocialPlus
       end
       # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
 
-      # [ 都道府県コード(prefecture), 都道府県名(prefecture_name), 市区町村コード(city), 都道府県以降の住所(location) ] の配列を返す
+      # @return [Array] Returns prefecture code, prefecture_name, city code and location(rest of the address)
       def extract_location(profile)
         location = profile[:location].presence || ''
 
