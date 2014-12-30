@@ -10,7 +10,6 @@ require 'social_plus/web_api/api_error'
 
 module SocialPlus
   module WebApi
-
     class Client
 
       API_KEY_RE = /\A[0-9a-f]{40}\z/
@@ -98,6 +97,5 @@ module SocialPlus
         result.key?('error') && %w(message code).all? { |key| result['error'].key?(key) }
       end
     end
-
   end
 end

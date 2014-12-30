@@ -8,7 +8,6 @@ require 'active_support/core_ext/string/conversions'
 
 module SocialPlus
   module WebApi
-
     # Social Plusから取得したユーザー認証情報のprofile, emailを整理して表現するクラス
     class Profile
       # @param [Hash] params ソーシャルPLUSから取得したユーザー認証情報
@@ -269,6 +268,5 @@ module SocialPlus
         47 => '沖縄県'
       }
     end
-
   end
 end

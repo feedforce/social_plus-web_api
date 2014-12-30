@@ -4,7 +4,6 @@ require 'net/http'
 
 module SocialPlus
   module WebApi
-
     # SocialPlus APIのエラーレスポンスボディをラップする例外
     class ApiError < StandardError
       # @overload initialize(response)
@@ -27,6 +26,5 @@ module SocialPlus
       # @return [Integer] エラーコード(APIエラーコード または HTTPステータスコード)
       attr_reader :code
     end
-
   end
 end

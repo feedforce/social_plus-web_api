@@ -6,7 +6,6 @@ require 'active_support/core_ext/hash/slice'
 
 module SocialPlus
   module WebApi
-
     # ソーシャルPLUS上のユーザーを表すオブジェクト
     class User
       TOKEN_RE = /\A[0-9a-f]{40}\z/
@@ -56,6 +55,5 @@ module SocialPlus
       # @return [Array] ログインしたことのあるプロバイダ名の配列を返す
       attr_reader :providers
     end
-
   end
 end
