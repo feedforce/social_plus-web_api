@@ -32,7 +32,7 @@ describe SocialPlus::WebApi::Client do
           }
         }.to_json
       }
-      it { expect(api_call).to eq({'info' => {'account' => 'ff', 'site_id' => 'demoapp'}}) }
+      it { expect(api_call).to eq({ 'info' => { 'account' => 'ff', 'site_id' => 'demoapp' } }) }
     end
 
     context '未登録のAPIキー' do
@@ -104,7 +104,7 @@ describe SocialPlus::WebApi::Client do
     describe 'API呼び出し' do
       let(:api_call) { client.execute('appinfo', {}) }
       before :each do
-        stub_request(:get, 'https://api.socialplus.jp/api/appinfo').with(query: {key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3'}).to_return(
+        stub_request(:get, 'https://api.socialplus.jp/api/appinfo').with(query: { key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3' }).to_return(
           status: stub_status, body: stub_body
         )
       end
@@ -125,7 +125,7 @@ describe SocialPlus::WebApi::Client do
     describe 'API呼び出し' do
       let(:api_call) { client.execute('share', via: :post) }
       before :each do
-        stub_request(:post, 'https://api.socialplus.jp/api/share').with(body: {key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3'}).to_return(
+        stub_request(:post, 'https://api.socialplus.jp/api/share').with(body: { key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3' }).to_return(
           status: stub_status, body: stub_body
         )
       end

@@ -37,7 +37,7 @@ describe SocialPlus::WebApi::User do
     it { expect(last_logged_in_provider.twitter?).to eq(false) }
 
     context 'logged in via facebook' do
-      let(:social_plus_user) { SocialPlus::WebApi::User.send(:new, social_plus_user_params.deep_merge('user' => {'last_logged_in_provider' => 'facebook'})) }
+      let(:social_plus_user) { SocialPlus::WebApi::User.send(:new, social_plus_user_params.deep_merge('user' => { 'last_logged_in_provider' => 'facebook' })) }
 
       it { expect(last_logged_in_provider).to eq('facebook') }
       it { expect(last_logged_in_provider.facebook?).to eq(true) }
@@ -45,7 +45,7 @@ describe SocialPlus::WebApi::User do
     end
 
     context 'logged in via twitter' do
-      let(:social_plus_user) { SocialPlus::WebApi::User.send(:new, social_plus_user_params.deep_merge('user' => {'last_logged_in_provider' => 'twitter'})) }
+      let(:social_plus_user) { SocialPlus::WebApi::User.send(:new, social_plus_user_params.deep_merge('user' => { 'last_logged_in_provider' => 'twitter' })) }
 
       it { expect(last_logged_in_provider).to eq('twitter') }
       it { expect(last_logged_in_provider.facebook?).to eq(false) }
