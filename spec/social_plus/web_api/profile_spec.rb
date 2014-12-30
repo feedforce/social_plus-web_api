@@ -304,7 +304,7 @@ describe SocialPlus::WebApi::Profile do
         it { expect(profile.prefecture).to be_nil }
         it { expect(profile.prefecture_name).to eq('') }
         it { expect(profile.city).to be_nil }
-        it { expect(profile.location).to eq('') }
+        it { expect(profile.location).to eq('東京都文京区1-2-1') }
       end
 
       context %q|'location_jis_id' is missing| do

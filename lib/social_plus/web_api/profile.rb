@@ -197,21 +197,24 @@ module SocialPlus
 
       # [ 都道府県コード(prefecture), 都道府県名(prefecture_name), 市区町村コード(city), 都道府県以降の住所(location) ] の配列を返す
       def extract_location(profile)
-        city_code = profile[:location_jis_id].to_i
-        if city_code > 0
-          prefecture_code = city_code / 1000
-          if PREFECTURES.key?(prefecture_code)
-            prefecture_name = PREFECTURES[prefecture_code]
-            location = (profile[:location] || '').sub(/\A#{prefecture_name}/, '')
-            [ prefecture_code, prefecture_name, city_code, location ]
-          else
-            [ nil, '', nil, '' ]
-          end
-        elsif profile[:location].present?
-          [ nil, '', nil, profile[:location] ]
-        else
-          [ nil, '', nil, '' ]
-        end
+        location = profile[:location].presence || ''
+
+        city_code = city_code(profile)
+        prefecture_code = city_code_to_prefecture_code(city_code) if city_code
+        return [ nil, '', nil, location ] unless city_code && prefecture_code
+
+        prefecture_name = PREFECTURES[prefecture_code]
+        location_without_prefecture = location.sub(/\A#{prefecture_name}/, '')
+        [ prefecture_code, prefecture_name, city_code, location_without_prefecture ]
+      end
+
+      def city_code(profile)
+        profile[:location_jis_id].to_i.presence
+      end
+
+      def city_code_to_prefecture_code(city_code)
+        code = city_code / 1000
+        PREFECTURES.key?(code) ? code : nil
       end
 
       PREFECTURES = {
