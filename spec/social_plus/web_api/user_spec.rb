@@ -52,7 +52,6 @@ describe SocialPlus::WebApi::User do
       it { expect(last_logged_in_provider.twitter?).to eq(true) }
     end
 
-
     context %q|when 'user' is missing| do
       before do
         social_plus_user_params.except!('user')
