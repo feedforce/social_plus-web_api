@@ -93,27 +93,21 @@ module SocialPlus
       # @return [Array<String>] メールアドレスの配列を返す
       attr_reader :emails
 
+      ATTRIBUTE_KEYS = %w(
+        full_name      family_name      given_name
+        full_name_kana family_name_kana given_name_kana
+        zip_code prefecture prefecture_name city location
+        birthday
+        gender
+      )
+
       # @return [HashWithIndifferentAccess] Entryモデルの生成用パラメータを返す
       def to_attributes
-        {
-          full_name: self.full_name,
-          family_name: self.family_name,
-          given_name: self.given_name,
-
-          full_name_kana: self.full_name_kana,
-          family_name_kana: self.family_name_kana,
-          given_name_kana: self.given_name_kana,
-
-          zip_code: self.zip_code,
-          prefecture: self.prefecture,
-          prefecture_name: self.prefecture_name,
-          city: self.city,
-          location: self.location,
-          birthday: self.birthday,
-          gender: self.gender,
-          url: self.urls.first,
-          email_address: self.emails.first
-        }.with_indifferent_access
+        {}.with_indifferent_access.tap do |attributes|
+          ATTRIBUTE_KEYS.each { |key| attributes[key] = send(key) }
+          attributes[:url] = urls.first
+          attributes[:email] = emails.first
+        end
       end
 
       private
