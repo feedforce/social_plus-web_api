@@ -49,7 +49,7 @@ module SocialPlus
           else
             raise ApiError, response
           end
-        when Net::HTTPResponse
+        else
           raise ApiError, response
         end
       end
