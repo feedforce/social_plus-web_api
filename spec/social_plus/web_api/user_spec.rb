@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 require 'active_support/core_ext/hash/deep_merge'
 
 require 'social_plus/web_api/user'
