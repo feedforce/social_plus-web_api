@@ -8,6 +8,7 @@ require 'social_plus/web_api/api_error'
 
 module SocialPlus
   module WebApi
+    # A class which wraps calls to Social Plus Web API
     class Client
       API_KEY_RE = /\A[0-9a-f]{40}\z/
       private_constant :API_KEY_RE

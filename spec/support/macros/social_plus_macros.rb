@@ -2,6 +2,7 @@
 
 require 'active_support/concern'
 
+# :nodoc:
 module SocialPlusMacros
   extend ActiveSupport::Concern
 
