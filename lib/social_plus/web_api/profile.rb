@@ -181,7 +181,7 @@ module SocialPlus
         location = profile[:location].presence || ''
 
         city_code = city_code(profile)
-        prefecture_code = city_code_to_prefecture_code(city_code) if city_code
+        prefecture_code = city_code ? city_code_to_prefecture_code(city_code) : nil
         return [ nil, '', nil, location ] unless city_code && prefecture_code
 
         prefecture_name = PREFECTURES[prefecture_code]
