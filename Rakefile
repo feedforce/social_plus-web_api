@@ -14,4 +14,6 @@ YARD::Rake::YardocTask.new do |t|
   t.options << '--markup' << 'markdown'
 end
 
-RuboCop::RakeTask.new
+RuboCop::RakeTask.new do |t|
+  t.options << 'lib' << 'spec'
+end

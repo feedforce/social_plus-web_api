@@ -1,0 +1,57 @@
+#Metrics/AbcSize:
+#  Max: 52
+
+Metrics/LineLength:
+  Max: 192
+  AllowURI: true
+  URISchemes:
+    - http
+    - https
+
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Style/NumericLiterals:
+  MinDigits: 6
+
+Style/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
+Style/MethodCalledOnDoEndBlock:
+  Enabled: true
+
+Style/SymbolArray:
+  Enabled: true
+
+Style/ExtraSpacing:
+  Enabled: true
+
+Style/Blocks:
+  Enabled: false
+
+Style/FormatString:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+Style/RescueModifier:
+  Enabled: false
+
+Style/SignalException:
+  Enabled: false
+
+Style/SpaceInsideBrackets:
+  Enabled: false
+
+Style/UnneededPercentQ:
+  Enabled: false
+
+Style/CollectionMethods:
+  Enabled: false
+
+Style/Encoding:
+  Enabled: false
+
+Style/InlineComment:
+  Enabled: false
