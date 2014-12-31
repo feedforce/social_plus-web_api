@@ -72,13 +72,13 @@ describe SocialPlus::WebApi::User do
       end
     end
 
-    context %q|wen 'follow' is missing| do
+    context %q|when 'follow' is missing| do
       before do
         social_plus_user_params.except!('follow')
       end
       it { expect(social_plus_user.followers).to eq(0) }
     end
-    context %q|wen 'follow/followed_by' is missing| do
+    context %q|when 'follow/followed_by' is missing| do
       before do
         social_plus_user_params['follow'].except!('followed_by')
       end
