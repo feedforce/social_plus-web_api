@@ -5,6 +5,7 @@ require 'active_support/core_ext/object/to_query'
 require 'active_support/core_ext/hash/except'
 
 require 'social_plus/web_api/api_error'
+require 'social_plus/web_api/version'
 
 module SocialPlus
   module WebApi
@@ -56,7 +57,7 @@ module SocialPlus
       SOCIAL_PLUS_FQDN = URI('https://api.socialplus.jp/')
       private_constant :SOCIAL_PLUS_FQDN
 
-      USER_AGENT = 'Social Campaign'
+      USER_AGENT = 'Social Campaign/%s' % VERSION
       private_constant :USER_AGENT
 
       private
