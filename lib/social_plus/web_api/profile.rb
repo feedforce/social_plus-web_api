@@ -8,7 +8,7 @@ require 'active_support/core_ext/string/conversions'
 
 module SocialPlus
   module WebApi
-    # rubocop: disable Metrics/ClassLength
+    # rubocop: disable Metrics/ClassLength, Metrics/AbcSize
 
     # A class which represents authenticated user's information(profile and email) obtained from Social Plus
     class Profile

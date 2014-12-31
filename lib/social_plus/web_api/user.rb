@@ -23,6 +23,8 @@ module SocialPlus
         private :new
       end
 
+      # rubocop: disable Metrics/AbcSize
+
       # @param {hash] params User information obtained from Social Plus Web API
       # @option params [Hash] "user" User
       # @option params [Hash] "profile" User's profile
@@ -33,7 +35,6 @@ module SocialPlus
         raise ArgumentError, %q|missing 'user'| unless params.key?('user')
         user = params['user']
         raise ArgumentError, %q|missing 'user/identifier'| unless user.key?('identifier')
-
         @identifier = user['identifier']
         last_logged_in_provider = user['last_logged_in_provider'] || ''
         @last_logged_in_provider = last_logged_in_provider.inquiry.freeze
@@ -41,6 +42,8 @@ module SocialPlus
         @followers = params.key?('follow') && params['follow'].key?('followed_by') ? params['follow']['followed_by'] : 0
         @providers = params['providers']
       end
+
+      # rubocop: enable Metrics/AbcSize
 
       # @return [String] The user's Social Plus ID
       attr_reader :identifier
