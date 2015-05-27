@@ -1,3 +1,9 @@
+AllCops:
+  Exclude:
+    - bin/*
+    - db/schema.rb
+    - vendor/**/*
+
 #Metrics/AbcSize:
 #  Max: 52
 
@@ -26,8 +32,8 @@ Style/SymbolArray:
 Style/ExtraSpacing:
   Enabled: true
 
-Style/Blocks:
-  Enabled: false
+Style/BlockDelimiters:
+  EnforcedStyle: semantic
 
 Style/FormatString:
   Enabled: false
@@ -54,4 +60,16 @@ Style/Encoding:
   Enabled: false
 
 Style/InlineComment:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/ExtraSpacing:
+  Enabled: false
+
+Style/GlobalVars:
   Enabled: false
