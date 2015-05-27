@@ -3,14 +3,14 @@ require 'social_plus/web_api/client'
 
 describe SocialPlus::WebApi::Client do
   describe '#initialize' do
-    context '書式が妥当なAPIキー' do
+    context 'with valid API key' do
       # 40-digit hexadecimal
       let(:valid_api_key) { '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3' }
       let(:client) { SocialPlus::WebApi::Client.new(valid_api_key) }
       it { expect(client).to be_an_instance_of(SocialPlus::WebApi::Client) }
     end
 
-    context '書式が妥当でないAPIキー' do
+    context 'with invalid API key' do
       let(:invalid_api_key) { '100e1d1' }
       let(:client) { SocialPlus::WebApi::Client.new(invalid_api_key) }
       it { expect { client }.to raise_error(ArgumentError) }
@@ -18,7 +18,7 @@ describe SocialPlus::WebApi::Client do
   end
 
   shared_examples_for 'Web API' do
-    context '登録済みのAPIキー' do
+    context 'with registered API key' do
       let(:stub_status) { 200 }
       let(:stub_body) {
         {
@@ -32,7 +32,7 @@ describe SocialPlus::WebApi::Client do
       it { expect(api_call).to eq('info' => { 'account' => 'ff', 'site_id' => 'demoapp' }) }
     end
 
-    context '未登録のAPIキー' do
+    context 'with unregistered API key' do
       let(:stub_status) { 400 }
       let(:stub_body) {
         {
@@ -43,7 +43,7 @@ describe SocialPlus::WebApi::Client do
           }
         }.to_json
       }
-      it 'API例外を発生させる' do
+      it 'raises an ApiError' do
         expect { api_call }.to raise_error {|error|
           expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
           expect(error.message).to eq('Invalid API key or API key not found.')
@@ -52,10 +52,10 @@ describe SocialPlus::WebApi::Client do
       end
     end
 
-    context 'APIと無関係なサーバーエラーが発生' do
+    context 'when a server error unrelated to the API occurs' do
       let(:stub_status) { 503 }
       let(:stub_body) { '' }
-      it 'HTTP応答に基づいたAPI例外を発生させる' do
+      it 'raises an ApiError based on the HTTP response' do
         expect { api_call }.to raise_error {|error|
           expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
           expect(error.code).to eq(503)
@@ -63,10 +63,10 @@ describe SocialPlus::WebApi::Client do
       end
     end
 
-    context 'APIと無関係なクライアントエラーが発生' do
+    context 'when a client error unrelated to the API occurs' do
       let(:stub_status) { 402 }
       let(:stub_body) { '' }
-      it 'HTTP応答に基づいたAPI例外を発生させる' do
+      it 'raises an ApiError based on the HTTP response' do
         expect { api_call }.to raise_error {|error|
           expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
           expect(error.code).to eq(402)
@@ -74,10 +74,10 @@ describe SocialPlus::WebApi::Client do
       end
     end
 
-    context 'APIの応答でもHTTPエラーでもない' do
+    context 'when the response is neither an API response nor an HTTP error' do
       let(:stub_status) { 301 }
       let(:stub_body) { '' }
-      it 'HTTP応答に基づいたAPI例外を発生させる' do
+      it 'raises an ApiError based on the HTTP response' do
         expect { api_call }.to raise_error {|error|
           expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
           expect(error.code).to eq(301)
@@ -89,15 +89,15 @@ describe SocialPlus::WebApi::Client do
   let(:api_key) { '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3' }
   let(:client) { SocialPlus::WebApi::Client.new(api_key) }
 
-  describe 'GET リクエスト' do
-    describe 'リクエストヘッダー' do
+  describe 'GET request' do
+    describe 'request headers' do
       let(:request) { client.send(:create_get_request, 'appinfo', key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3') }
       describe 'User-Agent' do
         it { expect(request['User-Agent']).to eq('Social Campaign/0.0.1') }
       end
     end
 
-    describe 'API呼び出し' do
+    describe 'an API call' do
       let(:api_call) { client.execute('appinfo', {}) }
       before :each do
         stub_request(:get, 'https://api.socialplus.jp/api/appinfo')
@@ -109,15 +109,15 @@ describe SocialPlus::WebApi::Client do
     end
   end
 
-  describe 'POST リクエスト' do
-    describe 'リクエストヘッダー' do
+  describe 'POST request' do
+    describe 'request headers' do
       let(:request) { client.send(:create_post_request, 'share', key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3') }
       describe 'User-Agent' do
         it { expect(request['User-Agent']).to eq('Social Campaign/0.0.1') }
       end
     end
 
-    describe 'API呼び出し' do
+    describe 'an API call' do
       let(:api_call) { client.execute('share', via: :post) }
       before :each do
         stub_request(:post, 'https://api.socialplus.jp/api/share')
