@@ -1,5 +1,3 @@
-# -*- encoding: UTF-8 -*-
-
 require 'support/macros/social_plus_macros'
 require 'social_plus/web_api/profile'
 
