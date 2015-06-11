@@ -51,9 +51,9 @@ module SocialPlus
       attr_reader :last_logged_in_provider
       # @return [Profile] The user's profile
       attr_reader :profile
-      # @return [Integer] The number of followers(reaches)
+      # @return [Integer] The number of user's followers(reaches)
       attr_reader :followers
-      # @return [Array] Providers which the user has logged in
+      # @return [Array] The Providers which the user has logged in
       attr_reader :providers
     end
   end
