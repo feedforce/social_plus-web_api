@@ -1,4 +1,3 @@
-require 'support/macros/social_plus_macros'
 require 'social_plus/web_api/profile'
 
 describe SocialPlus::WebApi::Profile do
