@@ -44,6 +44,14 @@ module SocialPlus
         result.except('status')
       end
 
+      SOCIAL_PLUS_FQDN = URI('https://api.socialplus.jp/')
+      private_constant :SOCIAL_PLUS_FQDN
+
+      USER_AGENT = 'Social Campaign/%s' % VERSION
+      private_constant :USER_AGENT
+
+      private
+
       def raise_api_error(response, result)
         case response
         when Net::HTTPServerError, Net::HTTPClientError
@@ -56,14 +64,6 @@ module SocialPlus
           raise ApiError, response
         end
       end
-
-      SOCIAL_PLUS_FQDN = URI('https://api.socialplus.jp/')
-      private_constant :SOCIAL_PLUS_FQDN
-
-      USER_AGENT = 'Social Campaign/%s' % VERSION
-      private_constant :USER_AGENT
-
-      private
 
       def request(http_method, api_method, parameters)
         uri = request_uri(api_method)
