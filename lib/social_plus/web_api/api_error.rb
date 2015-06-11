@@ -1,6 +1,8 @@
 require 'net/http'
 
+# :nodoc:
 module SocialPlus
+  # :nodoc:
   module WebApi
     # An Exception class which wraps errors from SocialPlus Web API
     class ApiError < StandardError

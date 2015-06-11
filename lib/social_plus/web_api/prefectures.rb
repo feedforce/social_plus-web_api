@@ -1,4 +1,6 @@
+# :nodoc:
 module SocialPlus
+  # :nodoc:
   module WebApi
     PREFECTURES = {
       1 => '北海道',

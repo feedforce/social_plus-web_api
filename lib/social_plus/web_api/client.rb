@@ -8,7 +8,9 @@ require 'active_support/core_ext/hash/except'
 require 'social_plus/web_api/api_error'
 require 'social_plus/web_api/version'
 
+# :nodoc:
 module SocialPlus
+  # :nodoc:
   module WebApi
     # A class which wraps calls to Social Plus Web API
     class Client

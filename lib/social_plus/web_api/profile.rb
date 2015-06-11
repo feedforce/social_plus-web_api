@@ -6,7 +6,9 @@ require 'active_support/core_ext/string/conversions'
 
 require 'social_plus/web_api/prefectures'
 
+# :nodoc:
 module SocialPlus
+  # :nodoc:
   module WebApi
     # rubocop: disable Metrics/ClassLength, Metrics/AbcSize
 

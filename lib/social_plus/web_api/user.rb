@@ -2,7 +2,9 @@ require 'social_plus/web_api/profile'
 require 'active_support/core_ext/string/inquiry'
 require 'active_support/core_ext/hash/slice'
 
+# :nodoc:
 module SocialPlus
+  # :nodoc:
   module WebApi
     # A class which represents a user of Social Plus
     class User

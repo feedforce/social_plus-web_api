@@ -1,3 +1,4 @@
+# :nodoc:
 module SocialPlus
   # :nodoc:
   module WebApi
