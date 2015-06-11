@@ -27,7 +27,7 @@ module SocialPlus
         @birthday = /\A\d{4}-\d{2}-\d{2}\z/ =~ profile[:birthday] ? profile[:birthday].try(:to_date).freeze : nil
 
         emails = params[:email]
-        @emails = emails && emails.respond_to?(:map) ? emails.map { |email| email[:email].freeze}.compact.freeze : []
+        @emails = emails && emails.respond_to?(:map) ? emails.map { |email| email[:email].freeze }.compact.freeze : []
 
         freeze
       end
@@ -97,7 +97,7 @@ module SocialPlus
       private
 
       def filter_http_urls(uris)
-        uris.map {|uri_string| URI(uri_string).freeze rescue nil}.select {|url| url.try(:scheme).in?(%w(http https))}.freeze
+        uris.map { |uri_string| URI(uri_string).freeze rescue nil }.select { |url| url.try(:scheme).in?(%w(http https)) }.freeze
       end
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
