@@ -17,15 +17,17 @@ module SocialPlus
         params = params.with_indifferent_access
 
         profile = params[:profile]
-        @full_name, @given_name, @family_name, @full_name_kana, @given_name_kana, @family_name_kana = extract_names(profile)
+        @full_name, @given_name, @family_name, @full_name_kana, @given_name_kana, @family_name_kana = extract_names(profile).freeze
         @zip_code = profile[:postal_code]
-        @prefecture, @prefecture_name, @city, @location = extract_location(profile)
+        @prefecture, @prefecture_name, @city, @location = extract_location(profile).freeze
         @gender = profile[:gender].in?([1, 2]) ? profile[:gender] : nil
         @urls = profile[:uri].respond_to?(:map) ? filter_http_urls(profile[:uri]) : []
         @birthday = /\A\d{4}-\d{2}-\d{2}\z/ =~ profile[:birthday] ? profile[:birthday].try(:to_date).freeze : nil
 
         emails = params[:email]
-        @emails = emails && emails.respond_to?(:map) ? emails.map { |email| email[:email] }.compact : []
+        @emails = emails && emails.respond_to?(:map) ? emails.map { |email| email[:email].freeze}.compact.freeze : []
+
+        freeze
       end
 
       # @return [String] Returns the user's full name
@@ -93,7 +95,7 @@ module SocialPlus
       private
 
       def filter_http_urls(uris)
-        uris.map { |uri_string| URI(uri_string).freeze rescue nil }.select { |url| url.try(:scheme).in?(%w(http https)) }
+        uris.map {|uri_string| URI(uri_string).freeze rescue nil}.select {|url| url.try(:scheme).in?(%w(http https))}.freeze
       end
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
