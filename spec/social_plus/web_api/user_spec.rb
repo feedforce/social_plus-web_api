@@ -3,12 +3,11 @@ require 'social_plus/web_api/user'
 require 'support/macros/social_plus_macros'
 
 describe SocialPlus::WebApi::User do
-  let(:api_client) { double(:api_client) }
-  let(:token) { '1234567812345678123456781234567812345678' }
-
   include SocialPlusMacros
 
   describe '.authenticate' do
+    let(:api_client) { double(:api_client) }
+    let(:token) { '1234567812345678123456781234567812345678' }
     let(:user) { double(:user) }
 
     before :each do
@@ -20,68 +19,114 @@ describe SocialPlus::WebApi::User do
     it { expect(SocialPlus::WebApi::User.authenticate(api_client, token)).to eq(user) }
   end
 
-  describe '#initialize' do
-    let(:social_plus_user) { SocialPlus::WebApi::User.send(:new, social_plus_user_params) }
+  let(:social_plus_user) { SocialPlus::WebApi::User.send(:new, social_plus_user_params) }
 
-    it { expect(social_plus_user.identifier).to eq('12345abcde12345abcde12345abcde12345abcde') }
+  let(:last_logged_in_provider) { social_plus_user.last_logged_in_provider }
 
-    it { expect(social_plus_user.profile).to be_an_instance_of(SocialPlus::WebApi::Profile) }
-    it { expect(social_plus_user.followers).to eq(200) }
+  shared_examples_for 'an User instance' do
+    describe '#identifier' do
+      it { expect(social_plus_user.identifier).to eq('12345abcde12345abcde12345abcde12345abcde') }
+    end
 
-    let(:last_logged_in_provider) { social_plus_user.last_logged_in_provider }
+    describe '#profile' do
+      it { expect(social_plus_user.profile).to be_an_instance_of(SocialPlus::WebApi::Profile) }
+    end
 
-    it { expect(last_logged_in_provider).to eq('feedforce') }
-    it { expect(last_logged_in_provider.facebook?).to eq(false) }
-    it { expect(last_logged_in_provider.twitter?).to eq(false) }
+    describe '#followers' do
+      it { expect(social_plus_user.followers).to eq(200) }
+    end
+  end
 
-    context 'logged in via facebook' do
-      let(:social_plus_user) {
-        SocialPlus::WebApi::User.send(:new, social_plus_user_params.deep_merge('user' => { 'last_logged_in_provider' => 'facebook' }))
-      }
+  context 'logged in directly' do
+    it_behaves_like 'an User instance'
 
+    describe '#last_logged_in_provider' do
+      it { expect(last_logged_in_provider).to eq('feedforce') }
+
+      describe '#facebook?' do
+        it { expect(last_logged_in_provider.facebook?).to eq(false) }
+      end
+
+      describe '#twitter?' do
+        it { expect(last_logged_in_provider.twitter?).to eq(false) }
+      end
+    end
+  end
+
+  context 'logged in via facebook' do
+    before do
+      social_plus_user_params.deep_merge!('user' => { 'last_logged_in_provider' => 'facebook' })
+    end
+
+    it_behaves_like 'an User instance'
+
+    describe '#last_logged_in_provider' do
       it { expect(last_logged_in_provider).to eq('facebook') }
-      it { expect(last_logged_in_provider.facebook?).to eq(true) }
-      it { expect(last_logged_in_provider.twitter?).to eq(false) }
+
+      describe '#facebook?' do
+        it { expect(last_logged_in_provider.facebook?).to eq(true) }
+      end
+
+      describe '#twitter?' do
+        it { expect(last_logged_in_provider.twitter?).to eq(false) }
+      end
+    end
+  end
+
+  context 'logged in via twitter' do
+    before do
+      social_plus_user_params.deep_merge!('user' => { 'last_logged_in_provider' => 'twitter' })
     end
 
-    context 'logged in via twitter' do
-      let(:social_plus_user) {
-        SocialPlus::WebApi::User.send(:new, social_plus_user_params.deep_merge('user' => { 'last_logged_in_provider' => 'twitter' }))
-      }
+    it_behaves_like 'an User instance'
 
+    describe '#last_logged_in_provider' do
       it { expect(last_logged_in_provider).to eq('twitter') }
-      it { expect(last_logged_in_provider.facebook?).to eq(false) }
-      it { expect(last_logged_in_provider.twitter?).to eq(true) }
-    end
 
-    context %q|when 'user' is missing| do
-      before do
-        social_plus_user_params.except!('user')
+      describe '#facebook?' do
+        it { expect(last_logged_in_provider.facebook?).to eq(false) }
       end
-      it 'should raise error' do
-        expect { social_plus_user }.to raise_error(ArgumentError, %q|missing 'user'|)
+
+      describe '#twitter?' do
+        it { expect(last_logged_in_provider.twitter?).to eq(true) }
       end
     end
+  end
 
-    context %q|when 'identifier' is missing| do
-      before do
-        social_plus_user_params['user'].except!('identifier')
-      end
-      it 'should raise error' do
-        expect { social_plus_user }.to raise_error(ArgumentError, %q|missing 'user/identifier'|)
-      end
+  context %q|when 'user' is missing| do
+    before do
+      social_plus_user_params.except!('user')
     end
 
+    it 'should raise error' do
+      expect { social_plus_user }.to raise_error(ArgumentError, %q|missing 'user'|)
+    end
+  end
+
+  context %q|when 'user/identifier' is missing| do
+    before do
+      social_plus_user_params['user'].except!('identifier')
+    end
+
+    it 'should raise error' do
+      expect { social_plus_user }.to raise_error(ArgumentError, %q|missing 'user/identifier'|)
+    end
+  end
+
+  describe '#followers' do
     context %q|when 'follow' is missing| do
       before do
         social_plus_user_params.except!('follow')
       end
+
       it { expect(social_plus_user.followers).to eq(0) }
     end
+
     context %q|when 'follow/followed_by' is missing| do
       before do
         social_plus_user_params['follow'].except!('followed_by')
       end
+
       it { expect(social_plus_user.followers).to eq(0) }
     end
   end
