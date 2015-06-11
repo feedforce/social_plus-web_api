@@ -1,3 +1,4 @@
+require 'json'
 require 'uri'
 require 'net/https'
 
