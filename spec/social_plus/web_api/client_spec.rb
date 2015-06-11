@@ -2,16 +2,15 @@ require 'social_plus/web_api/client'
 
 describe SocialPlus::WebApi::Client do
   describe '#initialize' do
+    let(:clinet) { SocialPlus::WebApi::Client.new(api_key) }
     context 'with valid API key' do
       # 40-digit hexadecimal
-      let(:valid_api_key) { '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3' }
-      let(:client) { SocialPlus::WebApi::Client.new(valid_api_key) }
+      let(:api_key) { '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3' }
       it { expect(client).to be_an_instance_of(SocialPlus::WebApi::Client) }
     end
 
     context 'with invalid API key' do
-      let(:invalid_api_key) { '100e1d1' }
-      let(:client) { SocialPlus::WebApi::Client.new(invalid_api_key) }
+      let(:api_key) { '100e1d1' }
       it { expect { client }.to raise_error(ArgumentError) }
     end
   end
