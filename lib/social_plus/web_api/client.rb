@@ -47,7 +47,7 @@ module SocialPlus
       SOCIAL_PLUS_FQDN = URI('https://api.socialplus.jp/')
       private_constant :SOCIAL_PLUS_FQDN
 
-      USER_AGENT = 'Social Campaign/%s' % VERSION
+      USER_AGENT = 'SocialPlus Web API gem/%s' % VERSION
       private_constant :USER_AGENT
 
       private

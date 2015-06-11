@@ -91,7 +91,7 @@ describe SocialPlus::WebApi::Client do
     describe 'request headers' do
       let(:request) { client.send(:create_get_request, 'appinfo', key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3') }
       describe 'User-Agent' do
-        it { expect(request['User-Agent']).to eq('Social Campaign/0.0.1') }
+        it { expect(request['User-Agent']).to eq('SocialPlus Web API gem/0.0.1') }
       end
     end
 
@@ -111,7 +111,7 @@ describe SocialPlus::WebApi::Client do
     describe 'request headers' do
       let(:request) { client.send(:create_post_request, 'share', key: '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3') }
       describe 'User-Agent' do
-        it { expect(request['User-Agent']).to eq('Social Campaign/0.0.1') }
+        it { expect(request['User-Agent']).to eq('SocialPlus Web API gem/0.0.1') }
       end
     end
 
