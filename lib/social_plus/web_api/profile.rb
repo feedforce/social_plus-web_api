@@ -12,9 +12,12 @@ module SocialPlus
 
     # A class which represents authenticated user's information(profile and email) obtained from Social Plus
     class Profile
+      # rubocop: disable Metrics/MethodLength
+
       # @param [Hash<String,Object>] params a user's information obtained from Social Plus.
       # @option params [Hash] "profile" profile of a user
       # @option params [Array] "email" email addresses of a user
+
       def initialize(params)
         params = params.with_indifferent_access
 
@@ -31,6 +34,7 @@ module SocialPlus
 
         freeze
       end
+      # rubocop: enable Metrics/MethodLength
 
       # @return [String] Returns the user's full name
       attr_reader :full_name
