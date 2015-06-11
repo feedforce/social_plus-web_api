@@ -25,7 +25,7 @@ module SocialPlus
 
       # rubocop: disable Metrics/AbcSize
 
-      # @param {hash] params User information obtained from Social Plus Web API
+      # @param [hash] params User information obtained from Social Plus Web API
       # @option params [Hash] "user" User
       # @option params [Hash] "profile" User's profile
       # @option params [Array] "email" User's email addresses
