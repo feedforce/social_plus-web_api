@@ -1,4 +1,5 @@
 require 'social_plus/web_api/profile'
+require 'support/macros/social_plus_macros'
 
 describe SocialPlus::WebApi::Profile do
   include SocialPlusMacros

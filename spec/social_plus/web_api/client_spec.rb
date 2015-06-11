@@ -1,4 +1,5 @@
 require 'social_plus/web_api/client'
+require 'webmock/rspec'
 
 describe SocialPlus::WebApi::Client do
   describe '#initialize' do

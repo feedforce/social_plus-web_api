@@ -1,6 +1,6 @@
 require 'active_support/core_ext/hash/deep_merge'
-
 require 'social_plus/web_api/user'
+require 'support/macros/social_plus_macros'
 
 describe SocialPlus::WebApi::User do
   let(:api_client) { double(:api_client) }
