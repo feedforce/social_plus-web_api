@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = %(sakuro@users.noreply.github.com)
   spec.summary       = %q{SocialPlus Web API client}
   spec.description   = %q{SocialPlus Web API client}
-  spec.homepage      = ''
+  spec.homepage      = 'http://socialplus.jp'
   spec.license       = 'Confidential'
 
   spec.files         = `git ls-files -z`.split("\x0")
