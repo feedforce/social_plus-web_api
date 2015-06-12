@@ -16,7 +16,7 @@ And then execute:
 
 ## Usage
 
-Instantiate an instance of `SocialPlus::WebApi::Client` with a valid API key.
+Instantiate an instance of {SocialPlus::WebApi::Client} with a valid API key.
 
 ```ruby
 client = SocialPlus::WebApi::Client.new(API_KEY)
