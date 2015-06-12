@@ -49,7 +49,7 @@ module SocialPlus
 
       # @return [String] The user's Social Plus ID
       attr_reader :identifier
-      # @return [String] The provider which the user has logged in most recently
+      # @return [ActiveSupport::StringInquirer] The provider which the user has logged in most recently
       attr_reader :last_logged_in_provider
       # @return [Profile] The user's profile
       attr_reader :profile
