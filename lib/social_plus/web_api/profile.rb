@@ -96,7 +96,7 @@ module SocialPlus
         {}.with_indifferent_access.tap do |attributes|
           ATTRIBUTE_KEYS.each { |key| attributes[key] = send(key) }
           attributes[:url] = urls.first
-          attributes[:email] = emails.first
+          attributes[:email_address] = emails.first
         end
       end
 
