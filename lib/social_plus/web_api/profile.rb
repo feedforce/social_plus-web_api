@@ -83,23 +83,6 @@ module SocialPlus
       # @return [Array<String>] Returns the user's E-Mail addresses
       attr_reader :emails
 
-      ATTRIBUTE_KEYS = %w(
-        full_name      family_name      given_name
-        full_name_kana family_name_kana given_name_kana
-        zip_code prefecture prefecture_name city location
-        birthday
-        gender
-      )
-
-      # @return [HashWithIndifferentAccess] Returns attributes in Hash form
-      def to_attributes
-        {}.with_indifferent_access.tap do |attributes|
-          ATTRIBUTE_KEYS.each { |key| attributes[key] = send(key) }
-          attributes[:url] = urls.first
-          attributes[:email_address] = emails.first
-        end
-      end
-
       private
 
       def filter_http_urls(uris)
