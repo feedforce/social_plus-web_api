@@ -1,5 +1,3 @@
-require 'net/http'
-
 # :nodoc:
 module SocialPlus
   # :nodoc:
