@@ -1,5 +1,6 @@
 require 'active_support/core_ext/hash/deep_merge'
 require 'social_plus/web_api/user'
+require 'social_plus/web_api/api_error'
 require 'support/macros/social_plus_macros'
 
 describe SocialPlus::WebApi::User do
@@ -18,9 +19,22 @@ describe SocialPlus::WebApi::User do
 
     it { expect(SocialPlus::WebApi::User.authenticate(api_client, token)).to eq(user) }
 
-    describe 'invalid token' do
-      let(:token) { '@@@@' }
-      it { expect{SocialPlus::WebApi::User.authenticate(api_client, token)}.to raise_error(SocialPlus::WebApi::InvalidToken) }
+    context 'api error' do
+      let(:error){ {'message' => 'error', 'code' => error_code} }
+
+      before :each do
+        allow(api_client).to receive(:execute).and_raise(SocialPlus::WebApi::ApiError.new(error))
+      end
+
+      context 'invalid token' do
+        let(:error_code){ 4 }
+        it { expect{SocialPlus::WebApi::User.authenticate(api_client, token)}.to raise_error(SocialPlus::WebApi::InvalidToken) }
+      end
+
+      context 'not invalid token' do
+        let(:error_code){ 5 }
+        it { expect{SocialPlus::WebApi::User.authenticate(api_client, token)}.to raise_error(SocialPlus::WebApi::ApiError) }
+      end
     end
   end
 
