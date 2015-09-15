@@ -1,4 +1,5 @@
 require 'social_plus/web_api/profile'
+require 'social_plus/web_api/invalid_token'
 require 'active_support/core_ext/string/inquiry'
 require 'active_support/core_ext/hash/slice'
 
@@ -17,7 +18,7 @@ module SocialPlus
         # @param [String] token the token returned from Social Plus login
         # @return [User] User object
         def authenticate(api_client, token)
-          raise ArgumentError, 'invalid token' unless TOKEN_RE =~ token
+          raise SocialPlus::WebApi::InvalidToken unless TOKEN_RE =~ token
           result = api_client.execute('authenticated_user', token: token, add_profile: true)
           result['providers'] = api_client.execute('providers_of_user', identifier: result['user']['identifier'])['providers']
           new(result)

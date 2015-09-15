@@ -17,6 +17,11 @@ describe SocialPlus::WebApi::User do
     end
 
     it { expect(SocialPlus::WebApi::User.authenticate(api_client, token)).to eq(user) }
+
+    describe 'invalid token' do
+      let(:token) { '@@@@' }
+      it { expect{SocialPlus::WebApi::User.authenticate(api_client, token)}.to raise_error(SocialPlus::WebApi::InvalidToken) }
+    end
   end
 
   let(:social_plus_user) { SocialPlus::WebApi::User.send(:new, social_plus_user_params) }
