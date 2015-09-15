@@ -14,7 +14,7 @@ module SocialPlus
       #   @option error [Integer] code the error code
       def initialize(error)
         case error
-        when Net::HTTPResponse, SocialPlus::WebApi::ApiError
+        when Net::HTTPResponse
           super(error.message)
           @code = error.code.to_i
         else

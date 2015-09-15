@@ -25,16 +25,6 @@ describe SocialPlus::WebApi::User do
       before :each do
         allow(api_client).to receive(:execute).and_raise(SocialPlus::WebApi::ApiError.new(error))
       end
-
-      context 'invalid token' do
-        let(:error_code){ 4 }
-        it { expect{SocialPlus::WebApi::User.authenticate(api_client, token)}.to raise_error(SocialPlus::WebApi::InvalidToken) }
-      end
-
-      context 'not invalid token' do
-        let(:error_code){ 5 }
-        it { expect{SocialPlus::WebApi::User.authenticate(api_client, token)}.to raise_error(SocialPlus::WebApi::ApiError) }
-      end
     end
   end
 

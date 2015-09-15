@@ -73,6 +73,26 @@ describe SocialPlus::WebApi::Client do
       end
     end
 
+    context 'Invalid authentication token' do
+      let(:stub_status) { 404 }
+      let(:stub_body) {
+        {
+          'status' => 'failed',
+          'error' => {
+            'code' => 4,
+            'message' => 'Invalid authentication token or token not found'
+          }
+        }.to_json
+      }
+      it 'raises an InvalidToken' do
+        expect { api_call }.to raise_error {|error|
+          expect(error).to be_an_instance_of(SocialPlus::WebApi::InvalidToken)
+          expect(error.message).to eq('Invalid authentication token or token not found')
+          expect(error.code).to eq(4)
+        }
+      end
+    end
+
     context 'when the response is neither an API response nor an HTTP error' do
       let(:stub_status) { 301 }
       let(:stub_body) { '' }

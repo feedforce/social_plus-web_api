@@ -1,5 +1,4 @@
 require 'social_plus/web_api/profile'
-require 'social_plus/web_api/invalid_token'
 require 'active_support/core_ext/string/inquiry'
 require 'active_support/core_ext/hash/slice'
 
@@ -18,12 +17,6 @@ module SocialPlus
           result = api_client.execute('authenticated_user', token: token, add_profile: true)
           result['providers'] = api_client.execute('providers_of_user', identifier: result['user']['identifier'])['providers']
           new(result)
-        rescue ApiError => e
-          if e.code == 4 # WebAPI仕様書参照 TODO: 隠蔽したい
-            raise SocialPlus::WebApi::InvalidToken, e
-          else
-            raise
-          end
         end
         private :new
       end
