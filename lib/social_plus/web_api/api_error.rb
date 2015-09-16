@@ -6,21 +6,10 @@ module SocialPlus
   module WebApi
     # An Exception class which wraps errors from SocialPlus Web API
     class ApiError < StandardError
-
       def self.exception_from_api_result(response, result)
-        case response
-        when Net::HTTPServerError, Net::HTTPClientError
-          if social_plus_error?(result)
-            error = result['error']
-            case error['code']
-            when 4 # WebAPI仕様書参照 TODO: 隠蔽したい
-              raise InvalidToken, error
-            else
-              raise ApiError, error
-            end
-          else
-            raise ApiError, response
-          end
+        if social_plus_error?(response, result)
+          error = result['error']
+          raise EXCEPTION_CLASSES[error['code']], error
         else
           raise ApiError, response
         end
@@ -47,8 +36,21 @@ module SocialPlus
       attr_reader :code
 
       private
-      def self.social_plus_error?(result)
-        result.key?('error') && %w(message code).all? { |key| result['error'].key?(key) }
+      def self.social_plus_error?(response, result)
+        case response
+        when Net::HTTPServerError, Net::HTTPClientError
+          result.key?('error') && %w(message code).all? { |key| result['error'].key?(key) }
+        else
+          false
+        end
+      end
+    end
+
+    require 'social_plus/web_api/invalid_token'
+
+    class ApiError < StandardError
+      EXCEPTION_CLASSES = Hash.new(ApiError).tap do |exception_classes|
+        exception_classes[4] = InvalidToken
       end
     end
   end
