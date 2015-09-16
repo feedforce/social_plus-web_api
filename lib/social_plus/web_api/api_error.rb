@@ -22,7 +22,7 @@ module SocialPlus
     end
 
     require 'social_plus/web_api/invalid_token'
-    require 'social_plus/web_api/http_responce_error'
+    require 'social_plus/web_api/http_response_error'
 
     class ApiError < StandardError
       EXCEPTION_CLASSES = Hash.new(ApiError).tap do |exception_classes|
@@ -34,7 +34,7 @@ module SocialPlus
           error = result['error']
           raise EXCEPTION_CLASSES[error['code']], error
         else
-          raise HttpResponceError, response
+          raise HttpResponseError, response
         end
       end
 
