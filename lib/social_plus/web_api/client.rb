@@ -40,7 +40,7 @@ module SocialPlus
         response = request(http_method, method, parameters.merge(key: @api_key))
         result = parse_as_json(response.body)
 
-        raise_api_error(response, result) unless response.is_a?(Net::HTTPOK)
+        ApiError.exception_from_api_result(response, result) unless response.is_a?(Net::HTTPOK)
 
         result.except('status')
       end
@@ -52,26 +52,6 @@ module SocialPlus
       private_constant :USER_AGENT
 
       private
-
-      def raise_api_error(response, result)
-        case response
-        when Net::HTTPServerError, Net::HTTPClientError
-          if social_plus_error?(result)
-            error = result['error']
-            case error['code']
-            when 4 # WebAPI仕様書参照 TODO: 隠蔽したい
-              raise InvalidToken, error
-            else
-              raise ApiError, error
-            end
-          else
-            raise ApiError, response
-          end
-        else
-          raise ApiError, response
-        end
-      end
-
       def request(http_method, api_method, parameters)
         uri = request_uri(api_method)
         request = send("create_#{http_method.downcase}_request", uri.path, parameters)
@@ -99,10 +79,6 @@ module SocialPlus
         JSON.parse(json_text)
       rescue JSON::ParserError
         {}
-      end
-
-      def social_plus_error?(result)
-        result.key?('error') && %w(message code).all? { |key| result['error'].key?(key) }
       end
     end
   end
