@@ -2,7 +2,7 @@
 module SocialPlus
   # :nodoc:
   module WebApi
-    # An Exception class which invalid token from SocialPlus Web API
+    # An Exception class raised when SocialPlus Web API reports invalid token
     class InvalidToken < ApiError; end
   end
 end
