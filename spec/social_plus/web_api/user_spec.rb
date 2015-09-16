@@ -1,6 +1,5 @@
 require 'active_support/core_ext/hash/deep_merge'
 require 'social_plus/web_api/user'
-require 'social_plus/web_api/api_error'
 require 'support/macros/social_plus_macros'
 
 describe SocialPlus::WebApi::User do
@@ -18,14 +17,6 @@ describe SocialPlus::WebApi::User do
     end
 
     it { expect(SocialPlus::WebApi::User.authenticate(api_client, token)).to eq(user) }
-
-    context 'api error' do
-      let(:error){ {'message' => 'error', 'code' => error_code} }
-
-      before :each do
-        allow(api_client).to receive(:execute).and_raise(SocialPlus::WebApi::ApiError.new(error))
-      end
-    end
   end
 
   let(:social_plus_user) { SocialPlus::WebApi::User.send(:new, social_plus_user_params) }
