@@ -44,7 +44,7 @@ describe SocialPlus::WebApi::Client do
       }
       it 'raises an ApiError' do
         expect { api_call }.to raise_error {|error|
-          expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
+          expect(error).to be_a(SocialPlus::WebApi::ApiError)
           expect(error.message).to eq('Invalid API key or API key not found.')
           expect(error.code).to eq(1)
         }
@@ -56,7 +56,7 @@ describe SocialPlus::WebApi::Client do
       let(:stub_body) { '' }
       it 'raises an ApiError based on the HTTP response' do
         expect { api_call }.to raise_error {|error|
-          expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
+          expect(error).to be_a(SocialPlus::WebApi::ApiError)
           expect(error.code).to eq(503)
         }
       end
@@ -67,7 +67,7 @@ describe SocialPlus::WebApi::Client do
       let(:stub_body) { '' }
       it 'raises an ApiError based on the HTTP response' do
         expect { api_call }.to raise_error {|error|
-          expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
+          expect(error).to be_a(SocialPlus::WebApi::ApiError)
           expect(error.code).to eq(402)
         }
       end
@@ -98,7 +98,7 @@ describe SocialPlus::WebApi::Client do
       let(:stub_body) { '' }
       it 'raises an ApiError based on the HTTP response' do
         expect { api_call }.to raise_error {|error|
-          expect(error).to be_an_instance_of(SocialPlus::WebApi::ApiError)
+          expect(error).to be_a(SocialPlus::WebApi::ApiError)
           expect(error.code).to eq(301)
         }
       end
