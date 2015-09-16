@@ -8,16 +8,12 @@ module SocialPlus
   module WebApi
     # A class which represents a user of Social Plus
     class User
-      TOKEN_RE = /\A[0-9a-f]{40}\z/
-      private_constant :TOKEN_RE
-
       class << self
         # Fetch information of a user using a given one time token
         # @param [Client] api_client an API client
         # @param [String] token the token returned from Social Plus login
         # @return [User] User object
         def authenticate(api_client, token)
-          raise ArgumentError, 'invalid token' unless TOKEN_RE =~ token
           result = api_client.execute('authenticated_user', token: token, add_profile: true)
           result['providers'] = api_client.execute('providers_of_user', identifier: result['user']['identifier'])['providers']
           new(result)

@@ -6,6 +6,7 @@ require 'active_support/core_ext/object/to_query'
 require 'active_support/core_ext/hash/except'
 
 require 'social_plus/web_api/api_error'
+require 'social_plus/web_api/invalid_token'
 require 'social_plus/web_api/version'
 
 # :nodoc:
@@ -56,7 +57,13 @@ module SocialPlus
         case response
         when Net::HTTPServerError, Net::HTTPClientError
           if social_plus_error?(result)
-            raise ApiError, result['error']
+            error = result['error']
+            case error['code']
+            when 4 # WebAPI仕様書参照 TODO: 隠蔽したい
+              raise InvalidToken, error
+            else
+              raise ApiError, error
+            end
           else
             raise ApiError, response
           end
