@@ -6,8 +6,6 @@ module SocialPlus
   module WebApi
     # An Exception class which wraps errors from SocialPlus Web API
     class ApiError < StandardError
-      # @overload initialize(response)
-      #   @param response [Net::HTTPResponse] HTTP Response (except 200 OK)
       # @overload initialize(error)
       #   @param error [Hash] a Hash which represents an API error
       #   @option error [String] message the error message
