@@ -3,7 +3,7 @@ require 'webmock/rspec'
 
 describe SocialPlus::WebApi::Client do
   describe '#initialize' do
-    let(:clinet) { SocialPlus::WebApi::Client.new(api_key) }
+    let(:client) { SocialPlus::WebApi::Client.new(api_key) }
     context 'with valid API key' do
       # 40-digit hexadecimal
       let(:api_key) { '100e1d1f03d1cbcbd35d1a07dcafa96b364c67d3' }
