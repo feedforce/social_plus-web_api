@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'social_plus-web_api'
   spec.version       = SocialPlus::WebApi::VERSION
   spec.authors       = %(OZAWA Sakuro)
-  spec.email         = %(sakuro@users.noreply.github.com)
+  spec.email         = %(sakuro+rubygems.org@2238club.org)
   spec.summary       = %q{SocialPlus Web API client}
   spec.description   = %q{This gem provides fundamental access to Social Plus's Web API.}
   spec.homepage      = 'https://socialplus.jp'
