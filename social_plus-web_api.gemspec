@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{SocialPlus Web API client}
   spec.description   = %q{This gem provides fundamental access to Social Plus's Web API.}
   spec.homepage      = 'https://socialplus.jp'
-  spec.license       = 'Confidential'
+  spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = []
