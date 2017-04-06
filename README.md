@@ -1,5 +1,13 @@
 # SocialPlus::WebApi
 
+[![Travis Status](https://img.shields.io/travis/feedforce/social_plus-web_api.svg?style=flat-square)][travisci]
+[![License](https://img.shields.io/github/license/feedforce/social_plus-web_api.svg?style=flat-square)][license]
+[![Gem](https://img.shields.io/gem/v/social_plus-web_api.svg?style=flat-square)][gem-link]
+
+[travisci]: https://travis-ci.org/feedforce/social_plus-web_api
+[license]: https://github.com/feedforce/social_plus-web_api/blob/master/LICENSE.txt
+[gem-link]: http://badge.fury.io/rb/social_plus-web_api
+
 This gem provides fundamental access to Social Plus's Web API.
 
 ## Installation
@@ -7,12 +15,16 @@ This gem provides fundamental access to Social Plus's Web API.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'social_plus-web_api', github: 'feedforce/social_plus-web_api'
+gem 'social_plus-web_api'
 ```
 
 And then execute:
 
     $ bundle
+
+Or install it yourself as:
+
+    $ gem install social_plus-web_api
 
 ## Usage
 
